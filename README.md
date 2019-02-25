@@ -82,9 +82,9 @@ $data/
 $data/data/
 $data/data/cocotalk_challenge.h5
 $data/data/cocotalk_challenge.json
-$data/models
-$data/results
-$data/tmp
+$data/models/
+$data/results/
+$data/tmp/
 ```
 
 ### Demo

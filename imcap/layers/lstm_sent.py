@@ -6,6 +6,8 @@ class LSTM_sent(Recurrent):
     Lu et al. Knowing When to Look:
               Adaptive Attention via A Visual Sentinel for Image Captioning
     https://arxiv.org/abs/1612.01887
+
+    infer : https://github.com/keras-team/keras/blob/1.2.2/keras/layers/recurrent.py
     """
     def __init__(self, output_dim,
                  init='glorot_uniform', inner_init='orthogonal',
@@ -23,6 +25,7 @@ class LSTM_sent(Recurrent):
         self.U_regularizer = regularizers.get(U_regularizer)
         self.b_regularizer = regularizers.get(b_regularizer)
         self.dropout_W, self.dropout_U = dropout_W, dropout_U
+        # 哨兵初始化
         self.sentinel = sentinel
         if self.dropout_W or self.dropout_U:
             self.uses_learning_phase = True
@@ -67,8 +70,9 @@ class LSTM_sent(Recurrent):
                                    name='{}_U_o'.format(self.name))
         self.b_o = K.zeros((self.output_dim,), name='{}_b_o'.format(self.name))
 
+        # 若果使用哨兵门,初始化权重加上哨兵们
         if self.sentinel:
-            # sentinel gate
+            # sentinel gate  哨兵门
             self.W_g = self.init((input_dim, self.output_dim),
                                  name='{}_W_g'.format(self.name))
             self.U_g = self.inner_init((self.output_dim, self.output_dim),
@@ -81,6 +85,7 @@ class LSTM_sent(Recurrent):
                                       self.W_f, self.U_f, self.b_f,
                                       self.W_o, self.U_o, self.b_o,
                                       self.W_g, self.U_g, self.b_g]
+        # 否则为正常的lstm网络
         else:
             self.trainable_weights = [self.W_i, self.U_i, self.b_i,
                                       self.W_c, self.U_c, self.b_c,
@@ -125,6 +130,7 @@ class LSTM_sent(Recurrent):
             x_o = time_distributed_dense(x, self.W_o, self.b_o, dropout,
                                          input_dim, self.output_dim, timesteps)
             if self.sentinel:
+                # 同上，加入哨兵的计算
                 x_g = time_distributed_dense(x, self.W_g, self.b_g, dropout,
                                              input_dim, self.output_dim, timesteps)
                 return K.concatenate([x_i, x_f, x_c, x_o,x_g], axis=2)
@@ -135,6 +141,9 @@ class LSTM_sent(Recurrent):
             return x
 
     def step(self, x, states):
+        """
+        这部分代码细节和源码有一定区别，如果训练达不到预期，照着源码改回去
+        """
         h_tm1 = states[0]
         c_tm1 = states[1]
         B_U = states[2]
@@ -150,6 +159,8 @@ class LSTM_sent(Recurrent):
             if self.sentinel:
                 x_g = x[:, 4 * self.output_dim:]
         else:
+            # 此处可能有问题　warning  下面为源码
+            #  x_i = K.dot(x * B_W[0], self.W_i) + self.b_i
             x_i = K.dot(x, self.W_i) + self.b_i
             x_f = K.dot(x * B_W[1], self.W_f) + self.b_f
             x_c = K.dot(x * B_W[2], self.W_c) + self.b_c
