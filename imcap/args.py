@@ -17,10 +17,10 @@ def get_parser():
                         default = None,help='path to model file to load (either for testing or snapshooting).')
     # data-related
     parser.add_argument('-coco_path', dest='coco_path',
-                        default = '/seq/segmentation/COCO/tools',
+                        default = '/media/zhaodao/D/A_paper/coco',
                         help='COCO database')
     parser.add_argument('-data_folder', dest='data_folder',
-                        default = '/work/asalvador/sat_keras/',
+                        default = '../data',
                         help='save folder')
 
     # model parts, inputs

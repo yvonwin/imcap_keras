@@ -214,10 +214,12 @@ if __name__ == "__main__":
                                        args_dict.model_name + '_train.log'), "w")
 
     if not args_dict.model_file: # run all training
-
+        
+        print("init_models")
         model, model_val = init_models(args_dict)
         model, model_name = trainloop(args_dict,model,model_val = model_val)
         epoch_start = args_dict.nepochs
+        print(epoch_start.value)
 
         del model
         K.clear_session()
