@@ -95,6 +95,8 @@ Run ```sample_captions.ipynb``` to test the trained network on some images and v
 
 Run ```python train.py```. Run ```python args.py --help``` for a list of the available arguments to pass.
 
+此项目默认的trian 是不带　sgate的
+```python train.py --sgate True```
 ### Testing
 
 - Run ```python test.py``` to forward all validation images through a trained network and create json file with results. Use ```--cnntrain``` flag if evaluating a model with fine tuned convnet.

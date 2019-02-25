@@ -13,6 +13,7 @@ def get_parser():
     parser.add_argument('-json_file', dest='json_file',
                         default = 'cocotalk_challenge.json',
                         help='name of json file (with extension)')
+    # 这个参数不明白.
     parser.add_argument('-model_file', dest='model_file',
                         default = None,help='path to model file to load (either for testing or snapshooting).')
     # data-related
@@ -84,6 +85,8 @@ def get_parser():
                         help='Number of data loading threads',type=int)
     parser.add_argument('-es_prev_words',dest='es_prev_words', default = 'gen',
                         choices=['gt','gen'])
+    
+    # 提前停止学习指标
     parser.add_argument('-es_metric',dest='es_metric', default = 'CIDEr',
                         help='Early stopping metric',
                         choices=['loss','CIDEr','Bleu_4','Bleu_3','Bleu_2',
@@ -103,10 +106,12 @@ def get_parser():
     parser.add_argument('--lstm', dest='attlstm', action='store_false')
     parser.set_defaults(attlstm=True)
 
+    # lrmults学习率的系数，默认关闭，未测试过
     parser.add_argument('--lrmults', dest='lrmults', action='store_true')
     parser.set_defaults(lrmults=False)
 
 
+    # sentinel gate  哨兵门,默认关闭，此处为att lstm 改进的核心
     parser.add_argument('--sgate', dest='sgate', action='store_true')
     parser.set_defaults(sgate=False)
 
