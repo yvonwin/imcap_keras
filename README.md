@@ -61,6 +61,7 @@ $coco/images/train2014                    # train image dir
 $coco/images/val2014                      # ...
 ```
 
+
 - Navigate to ```imcap/utils``` and run:
 
 ```
@@ -74,6 +75,17 @@ python prepro_coco.py --output_json path_to_json --output_h5 path_to_h5 --images
 ## Usage
 
 Unless stated otherwise, run all commands from ```./imcap```:
+
+- data path
+```shell
+$data/
+$data/data/
+$data/data/cocotalk_challenge.h5
+$data/data/cocotalk_challenge.json
+$data/models
+$data/results
+$data/tmp
+```
 
 ### Demo
 
