@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import numpy as np
 import os
 from model import get_model, image_model, language_model
@@ -219,7 +220,6 @@ if __name__ == "__main__":
         model, model_val = init_models(args_dict)
         model, model_name = trainloop(args_dict,model,model_val = model_val)
         epoch_start = args_dict.nepochs
-        print(epoch_start.value)
 
         del model
         K.clear_session()

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 from keras.layers.recurrent import *
 
 class LSTM_sent(Recurrent):
@@ -25,7 +26,7 @@ class LSTM_sent(Recurrent):
         self.U_regularizer = regularizers.get(U_regularizer)
         self.b_regularizer = regularizers.get(b_regularizer)
         self.dropout_W, self.dropout_U = dropout_W, dropout_U
-        # 哨兵初始化
+        # sgant init
         self.sentinel = sentinel
         if self.dropout_W or self.dropout_U:
             self.uses_learning_phase = True
@@ -160,8 +161,8 @@ class LSTM_sent(Recurrent):
                 x_g = x[:, 4 * self.output_dim:]
         else:
             # 此处可能有问题　warning  下面为源码
-            #  x_i = K.dot(x * B_W[0], self.W_i) + self.b_i
-            x_i = K.dot(x, self.W_i) + self.b_i
+            x_i = K.dot(x * B_W[0], self.W_i) + self.b_i
+            # x_i = K.dot(x, self.W_i) + self.b_i
             x_f = K.dot(x * B_W[1], self.W_f) + self.b_f
             x_c = K.dot(x * B_W[2], self.W_c) + self.b_c
             x_o = K.dot(x * B_W[3], self.W_o) + self.b_o

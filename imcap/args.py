@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 import argparse
 
 def get_parser():
@@ -113,7 +114,8 @@ def get_parser():
 
     # sentinel gate  哨兵门,默认关闭，此处为att lstm 改进的核心
     parser.add_argument('--sgate', dest='sgate', action='store_true')
-    parser.set_defaults(sgate=False)
+    # parser.set_defaults(sgate=False)
+    parser.set_defaults(sgate=True)
 
     parser.add_argument('--log_term', dest='log_term', action='store_true')
     parser.set_defaults(log_term=False)
