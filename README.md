@@ -3,6 +3,7 @@
 
 This is a Keras & Tensorflow implementation of a captioning model. In particular, it uses the attention models described in [this](https://arxiv.org/abs/1612.01887) paper, which is depicted below:
 
+跑了两天，没有得到预期的结果，有可能是keras和新版的tensorflow不兼容的原因，总之，可能不采用它为基准
 <p align="center">
   <img src="figs/attmodel.png">
 </p>
@@ -12,6 +13,7 @@ where V are the K local features from the last convolutional layer of a ConvNet 
 which is used to compute the attention weights to apply to V in order to obtain the context vector c<sub>t</sub>. c<sub>t</sub> and h<sub>t</sub> are combined to predict the current word y<sub>t</sub>. 
 In (b), an additional gate is incorporated into the LSTM to produce the additional s<sub>t</sub> output, which is combined with V to compute the attention weights. 
 s<sub>t</sub> is used as an alternative feature to look at rather than the image features in V.
+
 
 ## Installation
 
@@ -119,3 +121,6 @@ For the sake of comparison, the data processing script follows the one in [Neura
 ## Contact
 
 For questions and suggestions either use the issues section or send an e-mail to amaia.salvador@upc.edu.
+
+problems:
+运行资源穷尽，初步觉得是batch_size 32太高了，换成１６再试一次，如果再出问题，我就得重写代码。

@@ -57,7 +57,7 @@ def get_parser():
     # Training params
     parser.add_argument('-seed', dest='seed',
                         default = 123, help='Random seed',type=int)
-    parser.add_argument('-bs',dest='bs', default = 32,
+    parser.add_argument('-bs',dest='bs', default = 16,
                             help='Batch Size',type=int)
     parser.add_argument('-optim',dest='optim', default ='adam',
                                 choices=['adam','SGD','adadelta','adagrad',
